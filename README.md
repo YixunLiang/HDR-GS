@@ -24,6 +24,7 @@ This is the official implementation of our NeurIPS 2024 paper "HDR-GS: Efficient
 <img src="fig/pipeline.png" style="height:340px" />
 
 ### News
+- **2024.12.01 :** Add Spiral trajectory video rendering and whole model save/reload features, refer *Training and Evaluation* for a try!🚀
 - **2024.11.26 :** Code, recalibrated data following the opencv standard, and training logs have been released. Feel free to check and have a try! 🤗
 - **2024.07.01 :** Our HDR-GS has been accepted by NeurIPS 2024! Code will be released before the start date of the conference (2024.12.10). Stay tuned. 🚀
 - **2024.05.24 :** Our paper is on [arxiv](https://arxiv.org/abs/2405.15125) now. Code, data, and training logs will be released. Stay tuned. 💫
@@ -160,9 +161,32 @@ python3 train_real_split.py --config config/luckycat.yaml --eval --gpu_id 0
 ```
 
 
+You can also reload trained models following:
+```shell
+# For synthetic scenes
+python3 train_synthetic_hdr_split.py --config config/sponza.yaml --eval --gpu_id 0 --syn --load_path "path_to_your_pretrained_point_clouds"
+```
+For example, if you train a model with config: ``` flower.yaml```, you will get a profile as:
+```sh
+  |--output
+    |--mlp
+      |--flower
+        |--exp-time
+          |--point_cloud
+            |interation_x
+              |--pointcloud.ply
+              |--tone_mapper.pth
+            ...
+          |--test_set_vis
+          |--videos
+          |--cameras.json
+          |--cfg_args
+          |--input.ply
+          |--log.txt
+```
+then, the ``` "path_to_your_pretrained_point_clouds"```  of iteration_x is ``` "output/mlp/flower/exp-time/point_cloud/interation_x"```
 
-
-
+you can also reload models only for testing by using ``` --test_only```. 
 &nbsp;
 
 ## 4. Citation
